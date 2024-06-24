@@ -2,10 +2,16 @@
 from typing import List
 
 
-def test_setup():
+def test_key_greater_than_zero():
     input_array = [5,7,1,4]
     key = 3
     expected_results = [12,10,16,13]
+    assert decrypt(input_array, key) == expected_results
+    
+def test_key_less_than_zero():
+    input_array = [2,4,9,3]
+    key = -2
+    expected_results = [12,5,6,13]
     assert decrypt(input_array, key) == expected_results
     
 
@@ -31,6 +37,9 @@ def decrypt(code : List[int], key: int) -> List[int]:
         
         if key > 0:
             return __decode_key_greater_than_zero(code, key)
+        
+        if key < 0:
+            return __decode_key_less_than_zero(code, key)
         
         
 def __decode_key_is_zero(code : List[int]) -> List[int]:
@@ -60,7 +69,6 @@ def __decode_key_greater_than_zero(code : List[int], key : int) -> List[int]:
             running_sum += code[calculated_pointer]
             
             
-        
         if left == 0:
             for i in range(key):
                 calculated_pointer = left + (i + 1)
@@ -78,5 +86,20 @@ def __decode_key_greater_than_zero(code : List[int], key : int) -> List[int]:
     return output
 
 
-
+def __decode_key_less_than_zero(code : List[int], key: int):
+    output = []
+    left = 0
+    while left < len(code):
+        # get all of the items for the key number of elements before left
+        running_sum = 0
+        absolute_key = abs(key)
+        for i in range (absolute_key):
+            calculated_pointer = left - (i + 1)
+            if calculated_pointer < 0:
+                calculated_pointer = (len(code)) - abs(calculated_pointer)
+            running_sum += code[calculated_pointer]
+        left += 1
+        output.append(running_sum)
+    return output
+            
         
