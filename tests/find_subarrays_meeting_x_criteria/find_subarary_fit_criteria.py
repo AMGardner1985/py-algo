@@ -8,7 +8,8 @@ it is just a tricky way of subsectioning an array based on what has been seen so
 
 from collections import defaultdict
 
-def find_subarray_fit_criteria(test_array, k):
+def find_subarray_fit_criteria(test_array, goal):
+    # create a dictionary to hold only what has been see so far (don't pre-poulate this)
     counts = defaultdict(int)
     counts[0] = 1
     
@@ -17,7 +18,14 @@ def find_subarray_fit_criteria(test_array, k):
     
     for numbers in test_array:
         # do logic to change current
-        answer += counts[current - k]
+        
+        # the answer is the count of items that meet the criteria - the goal
+        needed_scenario_or_number = current - goal
+        
+        #checks what has been seen if there is the needed umber or scenario in it, if so 
+        # #get the count of how many times that has happend and add it to the running count/ answer
+        answer += counts[needed_scenario_or_number]
+        
         counts[current] += 1
     
     return answer
