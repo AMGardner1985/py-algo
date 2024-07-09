@@ -51,5 +51,20 @@ def dfs_pattern_for_graph_with_possible_cycle(graph):
                 
     seen = {graph}
     return dfs_graph(graph)
-        
+
+def dfs_graph_interative(graph):
+    stack = [START_NODE]        
+    seen = {START_NODE}
+    
+    answer = 0
+    
+    while stack:
+        node = stack.pop()
+        # do some logic
+        for neighbor in graph[node]:
+            if neighbor not in seen:
+                seen.add(neighbor)
+                stack.append(neighbor)
+    return answer 
+
         
